@@ -4,6 +4,7 @@ import { clampFrequency } from "./clamp-frequency.js";
 import { interpolateXY } from "./interpolate-xy.js";
 import { smoothTransition } from "./smooth-transition.js";
 import { convertColorToChromaticity } from "../convert-color-to-chromaticity/convert-color-to-chromaticity.js";
+import { MINIMUM_FREQUENCY, MAXIMUM_FREQUENCY } from "../constants.js";
 /**
  * Maps frequency to xy color coordinates in the CIE Chromaticity Diagram
  * @param {number} frequency - The sound's frequency to map.
@@ -19,7 +20,11 @@ export function mapFrequencyToChromaticity(
   midFreqColor,
   highFreqColor
 ) {
-  const clampedFreq = clampFrequency(frequency, 150, 440);
+  const clampedFreq = clampFrequency(
+    frequency,
+    MINIMUM_FREQUENCY,
+    MAXIMUM_FREQUENCY
+  );
 
   const lowFreqXY = convertColorToChromaticity(lowFreqColor);
   Max.post(`Low frequency XY: ${lowFreqXY}`);
